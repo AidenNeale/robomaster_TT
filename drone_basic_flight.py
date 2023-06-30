@@ -19,19 +19,67 @@ if __name__ == '__main__':
     tl_flight.forward(distance=50).wait_for_completed() # Attempt to realign with takeoff position
 
     tl_flight.forward(distance=150).wait_for_completed()
-    # tl_flight.left(distance=100).wait_for_completed()
-    # tl_flight.forward(distance=100).wait_for_completed()
-    # tl_flight.forward(distance=100).wait_for_completed()
-    # tl_flight.forward(distance=100).wait_for_completed()
-    # tl_flight.forward(distance=100).wait_for_completed()
-    # tl_flight.right(distance=100).wait_for_completed()
 
-    # tl_flight.backward(distance=100).wait_for_completed()
-    # tl_flight.backward(distance=100).wait_for_completed()
-    # tl_flight.backward(distance=100).wait_for_completed()
-    # tl_flight.backward(distance=100).wait_for_completed()
-    # tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.left(distance=100).wait_for_completed()
+    tl_flight.left(distance=100).wait_for_completed()
 
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+
+    tl_flight.right(distance=100).wait_for_completed()
+
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+    tl_flight.forward(distance=100).wait_for_completed()
+
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+    tl_flight.backward(distance=100).wait_for_completed()
+
+    tl_flight.left(distance=100).wait_for_completed()
+    tl_flight.left(distance=100).wait_for_completed()
+    tl_flight.left(distance=100).wait_for_completed()
+
+    tl_flight.backward(distance=100).wait_for_completed()
     tl_flight.land().wait_for_completed()
 
     # tl_camera.stop_video_stream()
