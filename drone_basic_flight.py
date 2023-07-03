@@ -1,88 +1,61 @@
-import robomaster
-from robomaster import robot
+from drone import Drone
 
 
 if __name__ == '__main__':
-    robomaster.enable_logging_to_file() # Enable this if program breaks
-    tl_drone = robot.Drone()
+    drone = Drone()
+    drone.enable_camera()
+    drone.takeoff()
 
-    robomaster.config.LOCAL_IP_STR = '192.168.10.2'
-    tl_drone.initialize()
+    drone.head_to_start()
 
-    tl_flight = tl_drone.flight
-    tl_camera= tl_drone.camera
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
-    tl_flight.takeoff().wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    # tl_camera.start_video_stream(display=True)
-    tl_flight.up(distance=50).wait_for_completed()
-    tl_flight.forward(distance=50).wait_for_completed() # Attempt to realign with takeoff position
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
 
-    tl_flight.forward(distance=150).wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    tl_flight.left(distance=100).wait_for_completed()
-    tl_flight.left(distance=100).wait_for_completed()
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
 
-    tl_flight.right(distance=100).wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
 
-    tl_flight.right(distance=100).wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
-    tl_flight.right(distance=100).wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
 
-    tl_flight.right(distance=100).wait_for_completed()
+    drone.move_right(position=100, capture_frame=True)
 
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
-    tl_flight.right(distance=100).wait_for_completed()
 
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-
-    tl_flight.right(distance=100).wait_for_completed()
-
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-    tl_flight.forward(distance=100).wait_for_completed()
-
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.backward(distance=100).wait_for_completed()
-
-    tl_flight.left(distance=100).wait_for_completed()
-    tl_flight.left(distance=100).wait_for_completed()
-    tl_flight.left(distance=100).wait_for_completed()
-
-    tl_flight.backward(distance=100).wait_for_completed()
-    tl_flight.land().wait_for_completed()
-
-    # tl_camera.stop_video_stream()
-    # tl_camera.stop()
-
-    tl_drone.close()
+    drone.land()
+    drone.close()
