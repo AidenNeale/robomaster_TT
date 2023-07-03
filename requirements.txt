@@ -1,5 +1,6 @@
 ###### Requirements without Version Specifiers ######
 robomaster
-
+opencv-python
+opencv-contrib-python
 
 ###### Requirements with Version Specifiers ######
