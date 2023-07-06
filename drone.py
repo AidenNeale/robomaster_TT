@@ -32,8 +32,8 @@ class Drone():
 
     def frame_capture(self):
         time.sleep(1.5) # Sleep to stabilise drone before image capture
-        img = self.camera.read_cv2_image()
-        filepath = 'RoboMaster_Img_' + self.current_frame_id
+        img = self.camera.read_cv2_image(strategy="newest")
+        filepath = 'images/RoboMaster_Img_' + str(self.current_frame_id) + ".jpg"
         self.current_frame_id += 1 # Increment ID of Frame
         cv2.imwrite(filepath, img)
 
@@ -48,13 +48,22 @@ class Drone():
 
 
     def head_to_start(self):
-        self.move_forward(position=200)
-        self.move_left(position=200)
+        self.move_forward(position=100)
+        self.move_forward(position=100)
+        self.move_left(position=100)
+        self.move_left(position=100)
 
 
     def return_home(self):
-        self.move_backward(position=400)
-        self.move_left(position=300)
+        self.move_backward(position=100)
+        self.move_left(position=100)
+        self.move_left(position=100)
+        self.move_left(position=100)
+        self.move_left(position=100)
+        self.move_backward(position=100)
+        self.move_backward(position=100)
+        self.move_backward(position=100)
+        self.move_backward(position=100)
         self.move_backward(position=100)
 
 
