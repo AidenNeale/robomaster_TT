@@ -12,24 +12,11 @@ if __name__ == '__main__':
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
     drone.move_right(position=100, capture_frame=True)
 
     drone.move_backward(position=100, capture_frame=True)
-    drone.move_backward(position=100, capture_frame=True)
-    drone.move_backward(position=100, capture_frame=True)
-    drone.move_backward(position=100, capture_frame=True)
-
-    drone.move_right(position=100, capture_frame=True)
-
-    drone.move_forward(position=100, capture_frame=True)
-    drone.move_forward(position=100, capture_frame=True)
-    drone.move_forward(position=100, capture_frame=True)
-    drone.move_forward(position=100, capture_frame=True)
-
-
-    drone.move_right(position=100, capture_frame=True)
-
     drone.move_backward(position=100, capture_frame=True)
     drone.move_backward(position=100, capture_frame=True)
     drone.move_backward(position=100, capture_frame=True)
@@ -41,6 +28,8 @@ if __name__ == '__main__':
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+
 
     drone.move_right(position=100, capture_frame=True)
 
@@ -48,6 +37,7 @@ if __name__ == '__main__':
     drone.move_backward(position=100, capture_frame=True)
     drone.move_backward(position=100, capture_frame=True)
     drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
 
     drone.move_right(position=100, capture_frame=True)
 
@@ -55,7 +45,25 @@ if __name__ == '__main__':
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
     drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
 
+    drone.move_right(position=100, capture_frame=True)
+
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+    drone.move_backward(position=100, capture_frame=True)
+
+    drone.move_right(position=100, capture_frame=True)
+
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+    drone.move_forward(position=100, capture_frame=True)
+
+    drone.return_home()
 
     drone.land()
     drone.close()
