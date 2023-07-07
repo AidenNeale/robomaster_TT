@@ -51,7 +51,7 @@ class Drone():
         self.move_forward(position=100)
         self.move_forward(position=100)
         self.move_left(position=100)
-        self.move_left(position=100)
+        self.move_left(position=100, capture_frame=True)
 
 
     def return_home(self):
