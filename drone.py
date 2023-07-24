@@ -1,11 +1,12 @@
 import cv2, time
+from threading import Thread, Event
 
 import robomaster
 from robomaster import robot
 
 
 class Drone():
-    def __init__(self, logging=False):
+    def __init__(self, logging=False, display=False):
         if logging:
             robomaster.enable_logging_to_file()
 
@@ -13,18 +14,36 @@ class Drone():
         self.drone = robot.Drone()
         self.drone.initialize()
 
+        self.condition = Event()
 
         self.flight = self.drone.flight
         self.camera = self.drone.camera
+
+        self.thread = Thread(target=self.camera_thread, name='camera_thread', args=(display,))
 
         self.current_frame_id = 0
 
 
     def enable_camera(self, display_on_screen=False):
         self.camera.start_video_stream(display=display_on_screen)
+        self.thread.start()
+
+    def camera_thread(self, display):
+        while True:
+            if self.condition.is_set():
+                break
+        img = self.camera.read_cv2_image(strategy="newest")
+        if display: # If this works, this can be used for computer vision -> ROS? ArUco Tag Detection, etc.
+            cv2.imshow('capture', img)
+            cv2.waitKey(0)
 
 
     def close(self):
+        self.condition.set()
+        try:
+            cv2.destroyAllWindows()
+        except:
+            pass
         self.camera.stop_video_stream()
         self.camera.stop()
         self.drone.close()
