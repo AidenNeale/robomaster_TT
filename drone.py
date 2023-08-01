@@ -5,7 +5,6 @@ from threading import Thread, Event
 import robomaster
 from robomaster import robot
 
-
 class Drone():
     def __init__(self, logging=False, display=False):
         if logging:
@@ -20,9 +19,12 @@ class Drone():
         self.flight = self.drone.flight
         self.camera = self.drone.camera
 
+        self.pos_x = 0
+        self.pos_y = 0
+
+
         self.thread = Thread(target=self.camera_thread, name='camera_thread', args=(display,))
 
-        self.current_frame_id = 0
 
         dictionary = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
         parameters =  aruco.DetectorParameters()
@@ -63,7 +65,6 @@ class Drone():
         
 
 
-
     def takeoff(self):
         self.flight.takeoff().wait_for_completed()
         self.flight.up(distance=50).wait_for_completed()  
@@ -93,20 +94,24 @@ class Drone():
         self.move_backward(position=100)
 
 
-    def move_forward(self, position=0, capture_frame=False):
+    def move_forward(self, position=50):
         self.flight.forward(distance=position).wait_for_completed()
+        self.pos_y += 50
 
 
-    def move_backward(self, position=0, capture_frame=False):
+    def move_backward(self, position=50):
         self.flight.backward(distance=position).wait_for_completed()
+        self.pos_y -= 50
 
 
-    def move_left(self, position=0, capture_frame=False):
+    def move_left(self, position=50):
         self.flight.left(distance=position).wait_for_completed()
+        self.pos_x += 50
 
 
-    def move_right(self, position=0, capture_frame=False):
+    def move_right(self, position=50):
         self.flight.right(distance=position).wait_for_completed()
+        self.pos_x -= 50
 
 
 if __name__ == '__main__':
