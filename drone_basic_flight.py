@@ -2,7 +2,7 @@ from drone import Drone
 
 
 if __name__ == '__main__':
-    drone = Drone()
+    drone = Drone(display=True)
     drone.enable_camera()
     drone.takeoff()
 
