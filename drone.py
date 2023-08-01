@@ -1,4 +1,5 @@
 import cv2, time
+from cv2 import aruco
 from threading import Thread, Event
 
 import robomaster
@@ -23,38 +24,44 @@ class Drone():
 
         self.current_frame_id = 0
 
+        dictionary = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
+        parameters =  aruco.DetectorParameters()
+        self.detector_aruco = aruco.ArucoDetector(dictionary, parameters)
 
-    def enable_camera(self, display_on_screen=False):
-        self.camera.start_video_stream(display=display_on_screen)
+
+    def enable_camera(self):
+        self.camera.start_video_stream(display=False)
+        time.sleep(2.5)
         self.thread.start()
+        time.sleep(2.5)
 
     def camera_thread(self, display):
         while True:
             if self.condition.is_set():
                 break
-        img = self.camera.read_cv2_image(strategy="newest")
-        if display: # If this works, this can be used for computer vision -> ROS? ArUco Tag Detection, etc.
-            cv2.imshow('capture', img)
-            cv2.waitKey(0)
+            img = self.camera.read_cv2_image(strategy="newest")
+            img = cv2.flip(img, 0) # flips vertically
+            if display: # If this works, this can be used for computer vision -> ROS? ArUco Tag Detection, etc.
+                markerCorners, markerIds, rejectedCandidates = self.detector_aruco.detectMarkers(img)
+                if markerIds != None:
+                    print(markerIds)
+                aruco.drawDetectedMarkers(img, markerCorners, markerIds)
+                cv2.imshow('capture', img)
+                cv2.waitKey(1)
 
 
     def close(self):
         self.condition.set()
         try:
             cv2.destroyAllWindows()
-        except:
+        except Exception as e:
+            print(e)
             pass
         self.camera.stop_video_stream()
         self.camera.stop()
         self.drone.close()
+        
 
-
-    def frame_capture(self):
-        time.sleep(1.5) # Sleep to stabilise drone before image capture
-        img = self.camera.read_cv2_image(strategy="newest")
-        filepath = 'images/RoboMaster_Img_' + str(self.current_frame_id) + ".jpg"
-        self.current_frame_id += 1 # Increment ID of Frame
-        cv2.imwrite(filepath, img)
 
 
     def takeoff(self):
@@ -88,27 +95,19 @@ class Drone():
 
     def move_forward(self, position=0, capture_frame=False):
         self.flight.forward(distance=position).wait_for_completed()
-        if capture_frame:
-            self.frame_capture()
 
 
     def move_backward(self, position=0, capture_frame=False):
         self.flight.backward(distance=position).wait_for_completed()
-        if capture_frame:
-            self.frame_capture()
 
 
     def move_left(self, position=0, capture_frame=False):
         self.flight.left(distance=position).wait_for_completed()
-        if capture_frame:
-            self.frame_capture()
 
 
     def move_right(self, position=0, capture_frame=False):
         self.flight.right(distance=position).wait_for_completed()
-        if capture_frame:
-            self.frame_capture()
 
 
 if __name__ == '__main__':
-    pass
+    print("You're running the class program")
