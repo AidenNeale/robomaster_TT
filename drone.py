@@ -22,6 +22,8 @@ class Drone():
         self.pos_x = 0
         self.pos_y = 0
 
+        self.markerID = -1
+        self.markerIDPos = {'x': 0, 'y': 0}
 
         self.thread = Thread(target=self.camera_thread, name='camera_thread', args=(display,))
 
@@ -45,8 +47,11 @@ class Drone():
             img = cv2.flip(img, 0) # flips vertically
             if display: # If this works, this can be used for computer vision -> ROS? ArUco Tag Detection, etc.
                 markerCorners, markerIds, rejectedCandidates = self.detector_aruco.detectMarkers(img)
-                if markerIds != None:
-                    print(markerIds)
+                if markerIds is not None:
+                    for index, value in enumerate(markerIds):
+                        if value == 10:
+                            self.markerID = value
+                            self.markerIDPos = {'x': self.pos_x, 'y': self.pos_y}
                 aruco.drawDetectedMarkers(img, markerCorners, markerIds)
                 cv2.imshow('capture', img)
                 cv2.waitKey(1)
@@ -67,7 +72,7 @@ class Drone():
 
     def takeoff(self):
         self.flight.takeoff().wait_for_completed()
-        self.flight.up(distance=50).wait_for_completed()  
+        self.flight.up(distance=150).wait_for_completed()  
 
 
     def land(self):
@@ -96,22 +101,26 @@ class Drone():
 
     def move_forward(self, position=50):
         self.flight.forward(distance=position).wait_for_completed()
-        self.pos_y += 50
+        time.sleep(0.1)
+        self.pos_y += position
 
 
-    def move_backward(self, position=50):
+    def move_backward(self, position=150):
         self.flight.backward(distance=position).wait_for_completed()
-        self.pos_y -= 50
+        time.sleep(0.1)
+        self.pos_y -= position
 
 
-    def move_left(self, position=50):
+    def move_left(self, position=150):
         self.flight.left(distance=position).wait_for_completed()
-        self.pos_x += 50
+        time.sleep(0.1)
+        self.pos_x -= position
 
 
-    def move_right(self, position=50):
+    def move_right(self, position=150):
         self.flight.right(distance=position).wait_for_completed()
-        self.pos_x -= 50
+        time.sleep(0.1)
+        self.pos_x += position
 
 
 if __name__ == '__main__':
