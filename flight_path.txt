@@ -21,11 +21,3 @@ left
 backward
 backward
 backward
-left
-forward
-forward
-forward
-left
-backward
-backward
-backward
