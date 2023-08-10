@@ -99,27 +99,27 @@ class Drone():
         self.move_backward(position=100)
 
 
-    def move_forward(self, position=50):
+    def move_forward(self, position=110):
         self.flight.forward(distance=position).wait_for_completed()
-        time.sleep(0.1)
+        time.sleep(0.5)
         self.pos_y += position
 
 
-    def move_backward(self, position=150):
+    def move_backward(self, position=110):
         self.flight.backward(distance=position).wait_for_completed()
-        time.sleep(0.1)
+        time.sleep(0.5)
         self.pos_y -= position
 
 
-    def move_left(self, position=150):
+    def move_left(self, position=125):
         self.flight.left(distance=position).wait_for_completed()
-        time.sleep(0.1)
+        time.sleep(0.5)
         self.pos_x -= position
 
 
-    def move_right(self, position=150):
+    def move_right(self, position=125):
         self.flight.right(distance=position).wait_for_completed()
-        time.sleep(0.1)
+        time.sleep(0.5)
         self.pos_x += position
 
 
