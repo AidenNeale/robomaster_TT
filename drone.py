@@ -1,5 +1,6 @@
 import cv2, time
 from cv2 import aruco
+import numpy as np
 from threading import Thread, Event
 
 import robomaster
@@ -22,6 +23,8 @@ class Drone():
         self.pos_x = 0
         self.pos_y = 0
 
+        self.current_image = np.array([])
+
         self.markerID = -1
         self.markerIDPos = {'x': 0, 'y': 0}
 
@@ -39,20 +42,27 @@ class Drone():
         self.thread.start()
         time.sleep(2.5)
 
+
     def camera_thread(self, display):
         while True:
             if self.condition.is_set():
                 break
             img = self.camera.read_cv2_image(strategy="newest")
             img = cv2.flip(img, 0) # flips vertically
+            self.current_image = img
             if display: # If this works, this can be used for computer vision -> ROS? ArUco Tag Detection, etc.
-                markerCorners, markerIds, rejectedCandidates = self.detector_aruco.detectMarkers(img)
+                markerTags, markerIds, rejectedCandidates = self.detector_aruco.detectMarkers(img)
                 if markerIds is not None:
-                    for index, value in enumerate(markerIds):
-                        if value == 10:
-                            self.markerID = value
-                            self.markerIDPos = {'x': self.pos_x, 'y': self.pos_y}
-                aruco.drawDetectedMarkers(img, markerCorners, markerIds)
+                    ids = markerIds.flatten()
+                    for (markerCorner, markerID) in zip(markerTags, ids):
+                        if markerID == 10:
+                            corners = markerCorner.reshape((4, 2))
+                            (topLeft, topRight, bottomRight, bottomLeft) = corners
+                            centreX = round((topLeft[0]+bottomRight[0])/2)
+                            centreY = round((topLeft[1]+bottomRight[1])/2)
+                            self.markerID = markerID
+                            self.markerIDPos = {'x': centreX, 'y': centreY}
+                aruco.drawDetectedMarkers(img, markerTags, markerIds)
                 cv2.imshow('capture', img)
                 cv2.waitKey(1)
 
@@ -69,7 +79,6 @@ class Drone():
         self.drone.close()
         
 
-
     def takeoff(self):
         self.flight.takeoff().wait_for_completed()
         self.flight.up(distance=150).wait_for_completed()  
@@ -80,32 +89,32 @@ class Drone():
 
 
     def head_to_start(self):
-        self.move_forward(position=100)
-        self.move_forward(position=100)
-        self.move_left(position=100)
-        self.move_left(position=100, capture_frame=True)
+        self.move_forward(position=60)
+        self.move_forward(position=60)
+        self.move_forward(position=60)
+        self.move_forward(position=60)
+        self.move_right()
+        self.move_right()
+        self.move_right(position=75)
 
 
     def return_home(self):
-        self.move_backward(position=100)
-        self.move_left(position=100)
-        self.move_left(position=100)
-        self.move_left(position=100)
-        self.move_left(position=100)
-        self.move_backward(position=100)
-        self.move_backward(position=100)
-        self.move_backward(position=100)
-        self.move_backward(position=100)
-        self.move_backward(position=100)
+        return_dist = self.pos_y /2
+        if self.pos_x > 0:
+            self.move_left(self.pos_x)
+        else:
+            self.move_right(-self.pos_x)
+        self.move_backward(return_dist) # Offset introduced to prevent drift causing drone to crash into wall
+        self.move_backward(return_dist) # Offset introduced to prevent drift causing drone to crash into wall
 
 
-    def move_forward(self, position=110):
+    def move_forward(self, position=135):
         self.flight.forward(distance=position).wait_for_completed()
         time.sleep(0.5)
         self.pos_y += position
 
 
-    def move_backward(self, position=110):
+    def move_backward(self, position=135):
         self.flight.backward(distance=position).wait_for_completed()
         time.sleep(0.5)
         self.pos_y -= position
